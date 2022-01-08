@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useState, useEffect } from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [expressData, setExpressData] = useState(null);
+
+	useEffect(() => {
+		// Here we fetch from the endpoint we defined in our server.js
+		fetch("/api/my_sick_url")
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				setExpressData(data);
+			});
+	}, []);
+
+	return (
+		<div className="App">
+			<p className="apitext">
+				{!expressData ? "loading.." : expressData.express}
+			</p>
+		</div>
+	);
 }
 
 export default App;
